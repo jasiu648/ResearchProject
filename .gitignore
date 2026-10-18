@@ -8,10 +8,6 @@ venv/
 .DS_Store
 *.log
 
-# Local project folders
-/data/raw/
-/data/processed/
-
 # Notebook artifacts
 *.nbconvert.ipynb
 

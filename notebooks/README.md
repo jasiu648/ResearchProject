@@ -1,18 +1,16 @@
 # Notebooks
 
-This directory stores the analysis, exploration, and visualization notebooks used during the project.
+Analysis, modelling, and visualisation notebooks.
 
-## Suggested naming
+## Contents
 
-- `01_data_exploration.ipynb`
-- `02_missing_data_analysis.ipynb`
-- `03_model_comparison.ipynb`
+| Notebook | Purpose |
+|---|---|
+| `missing_data.ipynb` | EDA of missing values; comparison of imputation methods |
+| `data_visualization.ipynb` | Station-level and time-series visualisations |
+| `regression.ipynb` | Bayesian Ridge regression imputation |
+| `random_forest.ipynb` | Random Forest imputation and prediction |
+| `mlp.ipynb` | MLP (TensorFlow/Keras) imputation |
+| `imputation_testing.ipynb` | Functional tests of `src/data_preparation.py` helpers |
 
-## Current notebooks
-
-- `data_visualization.ipynb`
-- `missing_data.ipynb`
-- `mlp.ipynb`
-- `random_forest.ipynb`
-- `regression.ipynb`
-- `test1.ipynb`
+All notebooks load data from `../data/raw/` and import helpers from `../src/`.

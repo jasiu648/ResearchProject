@@ -1,72 +1,64 @@
-# ResearchProject
+# Air Quality Missing Data Imputation
 
-Project for analysis of air-quality data and missing-value imputation in 2023 pollutant measurements.
+Research project analysing PM10 particulate-matter measurements from Polish State Environmental Monitoring (PMŚ) stations in 2023. The main goal is to compare multiple imputation strategies for filling gaps in hourly time-series air quality data, and evaluate predictive models trained on the imputed datasets.
 
-## Overview
-This repository contains the experimental workflow used to process environmental monitoring data, test missing-value imputation methods, and visualize temporal trends for selected pollutants.
+## Research questions
+
+- Which imputation method (MICE, LOCF, mean/median/mode, regression) preserves the statistical properties of the original PM10 series most faithfully?
+- How does imputation quality affect downstream ML model performance (Random Forest, MLP, regression)?
 
 ## Repository structure
 
-```text
-ResearchProject/
-├── README.md
-├── .gitignore
-├── requirements.txt
-├── data/
-│   ├── README.md
-│   ├── raw/
-│   └── processed/
-├── notebooks/
-│   ├── README.md
-│   ├── data_visualization.ipynb
-│   ├── missing_data.ipynb
-│   ├── mlp.ipynb
-│   ├── random_forest.ipynb
-│   ├── regression.ipynb
-│   └── test1.ipynb
-├── src/
-│   ├── __init__.py
-│   ├── README.md
-│   └── data_preparation.py
-├── docs/
-│   └── project-structure.md
-├── 2023_PM10_1g.xlsx
-├── 2023_PM10_1g_imputed.xlsx
-├── cleaned_time_series_data.xlsx
-├── DataVisualization.html
-├── DataVisualizationPerStation.html
-├── DataVisualizationWithSlider.html
-├── dane2023/
-├── data_preparation.py
-└── ...
+```
+data/
+  raw/          # Original hourly xlsx files per pollutant (PM10, PM2.5, NO2, O3 …)
+  processed/    # Imputed and cleaned datasets ready for modelling
+docs/
+  reports/      # Static HTML interactive visualisations
+  project-structure.md
+notebooks/
+  missing_data.ipynb        # EDA and comparison of imputation methods
+  data_visualization.ipynb  # Station-level and time-series visualisations
+  regression.ipynb          # Regression-based imputation and evaluation
+  random_forest.ipynb       # Random Forest imputation and prediction
+  mlp.ipynb                 # MLP (neural network) imputation
+  imputation_testing.ipynb  # Unit-style tests of the data_preparation helpers
+src/
+  data_preparation.py  # Reusable imputation and error-metric functions
+requirements.txt
 ```
 
-## Main goal
-Analyze pollutant time-series data, compare imputation methods, and generate interpretable visualizations of air-quality trends.
-
-## Setup
+## Quickstart
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
+jupyter lab
 ```
 
-## Dependencies
+Open any notebook under `notebooks/` — they import from `src/` and load data from `data/raw/`.
 
-- pandas
-- numpy
-- scikit-learn
-- openpyxl
-- jupyter
+## Data
 
-## Recommended workflow
+Source: [Główny Inspektorat Ochrony Środowiska (GIOŚ)](https://www.gios.gov.pl/) — hourly averaged concentrations (µg/m³) measured at monitoring stations across Poland, 2023.
 
-1. Keep raw input files under `data/raw/`.
-2. Store cleaned outputs in `data/processed/`.
-3. Put experiments and visualizations in `notebooks/`.
-4. Keep reusable logic in `src/`.
-5. Document decisions in `docs/`.
+Pollutants covered: PM10, PM2.5, NO₂, NO, NOₓ, O₃, SO₂, CO, C₆H₆.
 
-## Notes
-This project is intended for research and analysis work related to environmental monitoring and data-quality evaluation.
+## Methods
+
+| Method | Module / notebook |
+|---|---|
+| Iterative Imputer (MICE) | `src/data_preparation.py` |
+| Last Observation Carried Forward (LOCF) | `src/data_preparation.py` |
+| Constant-value (mean / median / mode) | `src/data_preparation.py` |
+| Bayesian Ridge regression | `notebooks/regression.ipynb` |
+| Random Forest | `notebooks/random_forest.ipynb` |
+| MLP (TensorFlow/Keras) | `notebooks/mlp.ipynb` |
+
+Error metrics reported: MSE, RMSE, MAE, MPE.
+
+## Requirements
+
+- Python ≥ 3.10
+- pandas, numpy, scikit-learn, openpyxl, jupyter
+- tensorflow (for `mlp.ipynb`)
+- plotly, missingno (for visualisation notebooks)
