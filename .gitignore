@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+*.log
+
+# Local project folders
+/data/raw/
+/data/processed/
+
+# Notebook artifacts
+*.nbconvert.ipynb
+
+# OS/editor files
+Thumbs.db
